@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SolarMap — Dashboard de Impacto</title>
+</head>
+
+<body>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+
+
+    <nav>
+        <a href="index.html">SolarMap</a>
+        <ul>
+            <li><a href="index.html">Início</a></li>
+            <li><a href="mapa.html">Mapa Solar</a></li>
+            <li><a href="simulador.html">Simulador</a></li>
+            <li><a href="dashboard.html">Dashboard</a></li>
+        </ul>
+    </nav>
+
+
+    <section>
+        <h1>Dashboard de Impacto</h1>
+        <p>Acompanhe sua economia financeira, energia limpa gerada e redução de CO₂.</p>
+    </section>
+
+
+    <section>
+        <h2>Resumo</h2>
+        <P><STROng>Importante!</STROng></P>
+        <p><i>Estamos utilizando dados ficticios para a demostração</i></p>
+
+        <div>
+            <h3>Economia Mensal</h3>
+            <p id="card-economia">R$ 187,00</p>
+        </div>
+
+        <div>
+            <h3>Energia Gerada</h3>
+            <p id="card-energia">320 kWh</p>
+        </div>
+
+        <div>
+            <h3>CO₂ Reduzido</h3>
+            <p id="card-co2">42 kg</p>
+        </div>
+
+    </section>
+
+
+    <section>
+        <h2>Gráficos</h2>
+
+        <div>
+            <h3>Economia ao longo dos meses (R$)</h3>
+
+            <canvas id="grafico-economia"></canvas>
+        </div>
+
+        <div>
+            <h3>Energia gerada por mês (kWh)</h3>
+
+            <canvas id="grafico-energia"></canvas>
+        </div>
+
+        <div>
+            <h3>Redução de CO₂ acumulada (kg)</h3>
+
+            <canvas id="grafico-co2"></canvas>
+        </div>
+
+    </section>
+
+
+    <section>
+        <h2>Comparativo: Antes e Depois</h2>
+
+        <div>
+            <h3>Antes dos painéis</h3>
+            <p><strong>Conta de luz: R$ 320,00</strong> <span id="antes-conta">—</span></p>
+            <p><strong>Emissão de CO₂: 68 Kg/mes</strong> <span id="antes-co2">—</span></p>
+        </div>
+
+        <div>
+            <h3>Depois dos painéis</h3>
+            <p><strong>Conta de luz: R$ 133,00</strong> <span id="depois-conta">—</span></p>
+            <p><strong>Emissão de CO₂: 26 Kg/mes</strong> <span id="depois-co2">—</span></p>
+        </div>
+
+    </section>
+
+    <script>
+        const meses = ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez']
+
+        new Chart(document.getElementById('grafico-economia'), {
+            type: 'line',
+            data: {
+                labels: meses,
+                datasets: [{
+                    label: 'Economia (R$)',
+                    data: [150, 160, 175, 187, 190, 185, 187, 195, 200, 210, 205, 215],
+                    borderColor: '#F5A623',
+                    backgroundColor: 'rgba(245, 166, 35, 0.1)',
+                    fill: true,
+                    tension: 0.4
+                }]
+            }
+        })
+
+        // Gráfico 2: Energia Gerada (Barras)
+        new Chart(document.getElementById('grafico-energia'), {
+            type: 'bar',
+            data: {
+                labels: meses,
+                datasets: [{
+                    label: 'Energia Gerada (kWh)',
+                    data: [290, 300, 310, 320, 330, 315, 320, 335, 340, 350, 345, 360],
+                    backgroundColor: '#2E7D5B'
+                }]
+            }
+        })
+
+        // Gráfico 3: Redução de CO₂ (Área)
+        new Chart(document.getElementById('grafico-co2'), {
+            type: 'line',
+            data: {
+                labels: meses,
+                datasets: [{
+                    label: 'CO₂ Reduzido (kg)',
+                    data: [38, 40, 41, 42, 44, 43, 42, 45, 46, 48, 47, 50],
+                    borderColor: '#1B6CA8',
+                    backgroundColor: 'rgba(27, 108, 168, 0.15)',
+                    fill: true,
+                    tension: 0.4
+                }]
+            }
+        })
+
+        // Gráfico 4: Comparação Antes e Depois (Pizza)
+        new Chart(document.getElementById('grafico-comparacao'), {
+            type: 'pie',
+            data: {
+                labels: ['Economia com solar (R$)', 'Valor ainda pago (R$)'],
+                datasets: [{
+                    data: [187, 133],
+                    backgroundColor: ['#F5A623', '#2E7D5B']
+                }]
+            }
+        })
+    </script>
+
+    <footer>
+        <p>SolarMap — Projeto acadêmico · ADS · Sorocaba</p>
+    </footer>
+
+</body>
+
+</html>
