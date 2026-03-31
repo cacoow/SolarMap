@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard</title>
+
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+</head>
+
+<body>
+
+    <aside class="sidebar">
+        <div class="menu">
+            <a href="../index.html"><i class="fas fa-home"></i></a>
+            <a href="simulador.html"><i class="fas fa-calculator"></i></a>
+            <a href="mapa.html" class="mapa"><i class="fas fa-map"></i></a>
+            <a href="dashboard.html" class="active"><i class="fas fa-chart-line"></i></a>
+        </div>
+    </aside>
+
+    <header class="navbar">
+        <div class="logo">☀️ SolarMap</div>
+
+        <div class="nav-actions">
+            <a href="#" class="login-btn">Login</a>
+            <div class="profile-icon">
+                <i class="fas fa-user"></i>
+            </div>
+        </div>
+    </header>
+
+    <main class="content">
+
+        <h1>Dashboard de Impacto</h1>
+        <p><i>Dados fictícios para demonstração</i></p>
+
+        <div class="cards">
+            <div class="card card-dashboard">
+                <h3>Economia</h3>
+                <p>R$ 187</p>
+            </div>
+
+            <div class="card card-mapa">
+                <h3>Energia</h3>
+                <p>320 kWh</p>
+            </div>
+
+            <div class="card card-simulador">
+                <h3>CO₂</h3>
+                <p>42 kg</p>
+            </div>
+        </div>
+
+        <div class="card">
+            <canvas id="grafico-economia"></canvas>
+        </div>
+
+        <div class="card">
+            <canvas id="grafico-energia"></canvas>
+        </div>
+
+    </main>
+
+    <script>
+        const meses = ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun'];
+
+        new Chart(document.getElementById('grafico-economia'), {
+            type: 'line',
+            data: {
+                labels: meses,
+                datasets: [{
+                    data: [150, 160, 175, 187, 190, 185],
+                    borderColor: '#ffd54f',
+                    fill: true
+                }]
+            }
+        });
+
+        new Chart(document.getElementById('grafico-energia'), {
+            type: 'bar',
+            data: {
+                labels: meses,
+                datasets: [{
+                    data: [290, 300, 310, 320, 330, 315],
+                    backgroundColor: '#4da6ff'
+                }]
+            }
+        });
+    </script>
+
+    <footer class="footer">
+        <p>SolarMap</p>
+    </footer>
+
+</body>
+
+</html>

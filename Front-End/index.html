@@ -1,60 +1,108 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>SolarMap</title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="assets/css/style.css">
+
+  <!-- Ícones -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
 </head>
+
 <body>
 
-  
-  <nav>
-    <a href="index.html">SolarMap</a>
-    <ul>
-      <li><a href="index.html">Início</a></li>
-      <li><a href="mapa.html">Mapa Solar</a></li>
-      <li><a href="simulador.html">Simulador</a></li>
-      <li><a href="dashboard.html">Dashboard</a></li>
-    </ul>
-  </nav>
-
-  
-  <section>
-    <h1>Descubra o potencial solar da sua região</h1>
-    <p>Visualize dados de irradiação solar, simule sua economia e entenda o impacto ambiental de adotar energia fotovoltaica.</p>
-    <a href="mapa.html">Ver o mapa solar</a>
-    <p></p>
-    <a href="simulador.html">Simular economia</a>
-  </section>
-
-  
-  <section>
-    <h2>Funcionalidades</h2>
-
-    <div>
-      <h3>Mapa Solar</h3>
-      <p>Visualize as regiões de Sorocaba com maior potencial de geração de energia solar com dados reais de irradiação.</p>
-      <a href="mapa.html">Acessar mapa</a>
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="menu">
+      <a href="index.html" class="active"><i class="fas fa-home"></i></a>
+      <a href="pages/simulador.html"><i class="fas fa-calculator"></i></a>
+      <a href="pages/mapa.html" class="mapa"><i class="fas fa-map"></i></a>
+      <a href="pages/dashboard.html"><i class="fas fa-chart-line"></i></a>
     </div>
+  </aside>
 
-    <div>
-      <h3>Simulador de Economia</h3>
-      <p>Informe sua conta de luz e o tamanho do telhado para calcular a energia gerada e a economia estimada.</p>
-      <a href="simulador.html">Acessar simulador</a>
+  <!-- NAVBAR -->
+  <header class="navbar">
+    <div class="logo">☀️ SolarMap</div>
+
+    <div class="nav-actions">
+      <a href="#" class="login-btn">Login</a>
+      <div class="profile-icon">
+        <i class="fas fa-user"></i>
+      </div>
     </div>
+  </header>
 
-    <div>
-      <h3>Dashboard de Impacto</h3>
-      <p>Acompanhe sua economia financeira, energia limpa gerada e redução de CO₂ em gráficos interativos.</p>
-      <a href="dashboard.html">Acessar dashboard</a>
-    </div>
+  <!-- CONTEÚDO -->
+  <main class="content">
 
-  </section>
+    <!-- HERO / APRESENTAÇÃO -->
+    <section class="hero-box">
 
-  <!-- RODAPÉ -->
-  <footer>
-    <p>SolarMap — Projeto acadêmico · ADS · Sorocaba</p>
+      <!-- TEXTO -->
+      <div class="hero-text">
+        <h1>Energia solar ao seu alcance</h1>
+
+        <p>
+          O SolarMap é uma plataforma inteligente que permite visualizar o potencial de energia solar
+          da sua região, simular economia na conta de luz e acompanhar seu impacto ambiental.
+        </p>
+
+        <p>
+          Ideal para quem deseja economizar, investir em sustentabilidade e entender melhor
+          o futuro da energia limpa.
+        </p>
+
+        <div style="margin-top: 20px;">
+          <a href="pages/mapa.html" class="btn">Explorar mapa</a>
+          <a href="pages/simulador.html" class="btn secondary">Simular economia</a>
+        </div>
+      </div>
+
+      <!-- IMAGEM -->
+      <div class="hero-image">
+        <img src="https://images.unsplash.com/photo-1509395176047-4a66953fd231" alt="Energia Solar">
+      </div>
+
+    </section>
+
+    <!-- FUNCIONALIDADES -->
+    <section class="features">
+
+      <h2>O que você pode fazer</h2>
+
+      <div class="cards">
+
+        <div class="card card-mapa">
+          <h3>Mapa Solar</h3>
+          <p>Veja as regiões com maior potencial de energia solar.</p>
+        </div>
+
+        <div class="card card-simulador">
+          <h3>Simulador</h3>
+          <p>Descubra quanto você pode economizar com energia solar.</p>
+        </div>
+
+        <div class="card card-dashboard">
+          <h3>Dashboard</h3>
+          <p>Acompanhe dados e impacto ambiental em tempo real.</p>
+        </div>
+
+      </div>
+
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <p>© 2026 SolarMap · Projeto acadêmico · ADS · Sorocaba</p>
   </footer>
 
 </body>
+
 </html>
