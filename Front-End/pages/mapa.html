@@ -13,24 +13,39 @@
 <body>
 
     <aside class="sidebar">
-        <div class="menu">
-            <a href="../index.html"><i class="fas fa-home"></i></a>
-            <a href="simulador.html"><i class="fas fa-calculator"></i></a>
-            <a href="mapa.html" class="mapa active"><i class="fas fa-map"></i></a>
-            <a href="dashboard.html"><i class="fas fa-chart-line"></i></a>
-        </div>
-    </aside>
-
-    <header class="navbar">
-        <div class="logo">☀️ SolarMap</div>
-
-        <div class="nav-actions">
-            <a href="login.html" class="login-btn">Login</a>
+        <div class="profile-container">
             <div class="profile-icon">
                 <i class="fas fa-user"></i>
             </div>
+            <div class="profile-panel">
+                <div class="profile-panel-header">
+                    <i class="fas fa-user-circle"></i>
+                    <div class="profile-panel-info">
+                        <div class="profile-panel-name">João Silva</div>
+                        <div class="profile-panel-email">joao@example.com</div>
+                    </div>
+                </div>
+                <ul class="profile-panel-menu">
+                    <li><a href="#"><i class="fas fa-user"></i>Meu Perfil</a></li>
+                    <li><a href="#"><i class="fas fa-cog"></i>Configurações</a></li>
+                    <li><a href="#"><i class="fas fa-history"></i>Histórico</a></li>
+                    <li><a href="#"><i class="fas fa-question-circle"></i>Ajuda</a></li>
+                </ul>
+                <div class="profile-panel-login">
+                    <a href="login.html"><i class="fas fa-sign-in-alt"></i>Login</a>
+                </div>
+                <div class="profile-panel-logout">
+                    <a href="#"><i class="fas fa-sign-out-alt"></i>Sair</a>
+                </div>
+            </div>
         </div>
-    </header>
+        <div class="menu">
+            <a href="../index.html" data-label="Início"><i class="fas fa-home"></i></a>
+            <a href="simulador.html" data-label="Simulador"><i class="fas fa-calculator"></i></a>
+            <a href="mapa.html" class="mapa active" data-label="Mapa"><i class="fas fa-map"></i></a>
+            <a href="dashboard.html" data-label="Dashboard"><i class="fas fa-chart-line"></i></a>
+        </div>
+    </aside>
 
     <main class="content">
 
@@ -55,6 +70,32 @@
     </footer>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD1JiPgRZcA7AhuY7poed4K0q1KUhQKTbE&libraries=places,visualization"></script>
     <script src="../assets/js/mapa.js"></script>
+    <script>
+        // Profile panel toggle
+        const profileIcon = document.querySelector('.profile-icon');
+        const profilePanel = document.querySelector('.profile-panel');
+        const profileContainer = document.querySelector('.profile-container');
+
+        if (profileIcon && profilePanel) {
+            profileIcon.addEventListener('click', (e) => {
+                e.stopPropagation();
+                profilePanel.classList.toggle('active');
+            });
+
+            document.addEventListener('click', (e) => {
+                if (!profileContainer.contains(e.target)) {
+                    profilePanel.classList.remove('active');
+                }
+            });
+
+            const profileMenuLinks = document.querySelectorAll('.profile-panel-menu a, .profile-panel-logout a, .profile-panel-login a');
+            profileMenuLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    profilePanel.classList.remove('active');
+                });
+            });
+        }
+    </script>
 </body>
 
 </html>

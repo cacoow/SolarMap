@@ -17,27 +17,39 @@
 
   <!-- SIDEBAR -->
   <aside class="sidebar">
-    <div class="menu">
-      <a href="index.html" class="active"><i class="fas fa-home"></i></a>
-      <a href="pages/simulador.html"><i class="fas fa-calculator"></i></a>
-      <a href="pages/mapa.html" class="mapa"><i class="fas fa-map"></i></a>
-      <a href="pages/dashboard.html"><i class="fas fa-chart-line"></i></a>
-    </div>
-  </aside>
-
-  <!-- NAVBAR -->
-  <header class="navbar">
-    <div class="logo">
-      <img src="assets/images/logo1.png" alt="SolarMap Logo" class="navbar-logo">
-    </div>
-
-    <div class="nav-actions">
-      <a href="pages/login.html" class="login-btn">Login</a>
+    <div class="profile-container">
       <div class="profile-icon">
         <i class="fas fa-user"></i>
       </div>
+      <div class="profile-panel">
+        <div class="profile-panel-header">
+          <i class="fas fa-user-circle"></i>
+          <div class="profile-panel-info">
+            <div class="profile-panel-name">João Silva</div>
+            <div class="profile-panel-email">joao@example.com</div>
+          </div>
+        </div>
+        <ul class="profile-panel-menu">
+          <li><a href="#"><i class="fas fa-user"></i>Meu Perfil</a></li>
+          <li><a href="#"><i class="fas fa-cog"></i>Configurações</a></li>
+          <li><a href="#"><i class="fas fa-history"></i>Histórico</a></li>
+          <li><a href="#"><i class="fas fa-question-circle"></i>Ajuda</a></li>
+        </ul>
+        <div class="profile-panel-login">
+          <a href="pages/login.html"><i class="fas fa-sign-in-alt"></i>Login</a>
+        </div>
+        <div class="profile-panel-logout">
+          <a href="#"><i class="fas fa-sign-out-alt"></i>Sair</a>
+        </div>
+      </div>
     </div>
-  </header>
+    <div class="menu">
+      <a href="index.html" class="active" data-label="Início"><i class="fas fa-home"></i></a>
+      <a href="pages/simulador.html" data-label="Simulador"><i class="fas fa-calculator"></i></a>
+      <a href="pages/mapa.html" class="mapa" data-label="Mapa"><i class="fas fa-map"></i></a>
+      <a href="pages/dashboard.html" data-label="Dashboard"><i class="fas fa-chart-line"></i></a>
+    </div>
+  </aside>
 
   <!-- CONTEÚDO -->
   <main class="content">
@@ -53,13 +65,13 @@
         
         <!-- LEFT SIDE - LOGO -->
         <div class="hero-logo-container">
-          <object data="assets/images/logo0.svg" type="image/svg+xml" class="hero-logo"></object>
+          <object data="assets/images/logo0.png" type="image/png" class="hero-logo"></object>
         </div>
 
         <!-- RIGHT SIDE - CONTENT -->
         <div class="hero-content">
           <h1 class="hero-title">
-            REVELE O <span class="highlight-primary">PONTO IDEAL</span> PARA SUA ENERGIA SOLAR, COM PRECISÃO DE <span class="highlight-secondary">SATÉLITE</span>.
+            REVELE O <span class="highlight-primary">PONTO IDEAL</span> PARA SUA ENERGIA SOLAR, COM PRECISÃO DE <span class="highlight-secondary">SATÉLITE</span>
           </h1>
 
           <p class="hero-description">
@@ -71,6 +83,13 @@
           </a>
         </div>
 
+      </div>
+    </section>
+
+    <!-- HERO DESTAQUE - FUNCIONALIDADES MAPA -->
+    <section class="hero-highlight">
+      <div class="hero-highlight-wrapper">
+        <img src="assets/images/hero2.png" alt="Funcionalidades do Mapa" class="hero-highlight-image">
       </div>
     </section>
 
@@ -136,6 +155,33 @@
   <footer class="footer">
     <p>© 2026 SolarMap · Projeto acadêmico · ADS · Sorocaba</p>
   </footer>
+
+  <script>
+    // Profile panel toggle
+    const profileIcon = document.querySelector('.profile-icon');
+    const profilePanel = document.querySelector('.profile-panel');
+    const profileContainer = document.querySelector('.profile-container');
+
+    profileIcon.addEventListener('click', (e) => {
+      e.stopPropagation();
+      profilePanel.classList.toggle('active');
+    });
+
+    // Close panel when clicking outside
+    document.addEventListener('click', (e) => {
+      if (!profileContainer.contains(e.target)) {
+        profilePanel.classList.remove('active');
+      }
+    });
+
+    // Close panel when clicking a menu item
+    const profileMenuLinks = document.querySelectorAll('.profile-panel-menu a, .profile-panel-logout a, .profile-panel-login a');
+    profileMenuLinks.forEach(link => {
+      link.addEventListener('click', () => {
+        profilePanel.classList.remove('active');
+      });
+    });
+  </script>
 
 </body>
 
