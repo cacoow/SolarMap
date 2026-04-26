@@ -33,6 +33,8 @@ class SupabaseAuth {
      */
     async signup(email, password, userData = {}) {
         try {
+            if (!this.supabase) this.initSupabase();
+            
             if (!this.supabase) {
                 throw new Error('Supabase não inicializado');
             }
@@ -76,6 +78,8 @@ class SupabaseAuth {
      */
     async login(email, password) {
         try {
+            if (!this.supabase) this.initSupabase();
+
             if (!this.supabase) {
                 throw new Error('Supabase não inicializado');
             }
@@ -109,6 +113,8 @@ class SupabaseAuth {
      */
     async logout() {
         try {
+            if (!this.supabase) this.initSupabase();
+            
             const { error } = await this.supabase.auth.signOut();
             if (error) throw error;
 
@@ -228,3 +234,47 @@ class SupabaseAuth {
 
 // Instanciar o objeto de autenticação globalmente
 const auth = new SupabaseAuth();
+
+// Lógica para atualizar a interface em todas as páginas
+document.addEventListener('DOMContentLoaded', async () => {
+    // Pequeno delay para garantir que o Supabase inicializou
+    setTimeout(async () => {
+        const session = await auth.getSession();
+        const user = session?.user;
+
+        const nameEl = document.getElementById('user-name');
+        const emailEl = document.getElementById('user-email');
+        const loginSection = document.getElementById('auth-login-section');
+        const logoutSection = document.getElementById('auth-logout-section');
+        const logoutLink = document.getElementById('logout-link');
+
+        if (user) {
+            // Usuário Logado
+            if (nameEl) nameEl.textContent = user.user_metadata?.full_name || 'Usuário';
+            if (emailEl) emailEl.textContent = user.email;
+            if (loginSection) loginSection.style.display = 'none';
+            if (logoutSection) logoutSection.style.display = 'block';
+        } else {
+            // Usuário Deslogado
+            if (nameEl) nameEl.textContent = 'Visitante';
+            if (emailEl) emailEl.textContent = 'Faça login para salvar dados';
+            if (loginSection) loginSection.style.display = 'block';
+            if (logoutSection) logoutSection.style.display = 'none';
+        }
+
+        // Configurar evento de Logout
+        if (logoutLink) {
+            logoutLink.addEventListener('click', async (e) => {
+                e.preventDefault();
+                const result = await auth.logout();
+                if (result.success) {
+                    // Limpar localStorage se houver
+                    localStorage.removeItem('solarmap_email');
+                    // Redirecionar para home ou login
+                    const isSubPage = window.location.pathname.includes('/pages/');
+                    window.location.href = isSubPage ? '../index.html' : 'index.html';
+                }
+            });
+        }
+    }, 500);
+});
