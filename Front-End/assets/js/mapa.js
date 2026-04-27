@@ -4,7 +4,7 @@ let userLocationMarker;
 let infoWindow;
 let placesService;
 let solarHeatmap;
-const API_KEY = 'AIzaSyD1JiPgRZcA7AhuY7poed4K0q1KUhQKTbE';
+const API_KEY = 'SUA_API_KEY_AQUI'; // Idealmente carregado de uma variável de ambiente ou config segura
 
 function initMap() {
     // Coordenadas iniciais (Brasil - centro)
@@ -239,7 +239,7 @@ function updateRegionData(location) {
     const regionElement = document.querySelectorAll('.card')[1].querySelectorAll('p')[0];
     const irradianciaElement = document.querySelectorAll('.card')[1].querySelectorAll('p')[1];
     const potentialElement = document.querySelectorAll('.card')[1].querySelectorAll('p')[2];
-    
+
     // Calcular radiação solar para a localização
     const distanciaDoEquador = Math.abs(location.lat());
     let radiacao = 1000 - (distanciaDoEquador * 5);
