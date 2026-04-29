@@ -65,6 +65,45 @@
 
     </main>
 
+    <!-- ===== BOTÃO FLUTUANTE PARA PESQUISA DE CEP ===== -->
+    <button class="floating-button" id="floating-cep-button" title="Pesquisar por CEP">
+        <i class="fas fa-search"></i>
+    </button>
+
+    <!-- ===== MODAL DE PESQUISA DE CEP ===== -->
+    <div class="modal-overlay" id="cep-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>🔍 Pesquisar por CEP</h2>
+                <button class="modal-close" id="cep-modal-close">×</button>
+            </div>
+            <div class="cep-input-group">
+                <input 
+                    type="text" 
+                    id="cep-input" 
+                    placeholder="Digite o CEP (ex: 01310-100)" 
+                    maxlength="9"
+                >
+                <button id="cep-search-button">Buscar</button>
+            </div>
+            <div id="cep-message" class="modal-message"></div>
+        </div>
+    </div>
+
+    <!-- ===== PAINEL LATERAL DE ANÁLISE SOLAR ===== -->
+    <div class="solar-panel" id="solar-panel">
+        <div class="solar-panel-header">
+            <div class="solar-panel-header-content">
+                <h2>☀️ Análise Solar</h2>
+                <p id="solar-location">Carregando local...</p>
+            </div>
+            <button class="solar-panel-close" id="solar-panel-close">×</button>
+        </div>
+        <div class="solar-panel-content" id="solar-panel-content">
+            <!-- Conteúdo será preenchido dinamicamente -->
+        </div>
+    </div>
+
     <footer class="footer">
         <p>SolarMap</p>
     </footer>
