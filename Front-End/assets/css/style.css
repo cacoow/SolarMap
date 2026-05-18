@@ -511,6 +511,46 @@ body {
     color: white;
 }
 
+.chart-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.card canvas {
+    width: 100% !important;
+    height: 300px !important;
+}
+
+.history-card ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.history-card li {
+    padding: 12px 0;
+    border-bottom: 1px solid #eee;
+}
+
+.history-card li:last-child {
+    border-bottom: none;
+}
+
+.history-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.history-row span {
+    display: block;
+    min-width: 120px;
+}
+
 
 
 /* INPUT */

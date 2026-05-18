@@ -7,6 +7,7 @@ function calcularEconomia() {
     const AREA_PAINEL = 2.6;       // m² por painel (incluindo folga de instalação)
     const CUSTO_WP_INSTALADO = 3.40; // R$ por Watt-pico (Preço médio de mercado instalado)
     const TAXA_DISP_KWH = 50;      // kWh (Custo de disponibilidade padrão para conexão bifásica)
+    const CO2_FACTOR = 0.13125;    // kg CO₂ por kWh médio estimado
 
     const contaMensal = parseFloat(document.getElementById('input-bill').value);
     const areaDisponivel = parseFloat(document.getElementById('input-area').value);
@@ -44,10 +45,33 @@ function calcularEconomia() {
     document.getElementById('res-panels').textContent = `${paineisNecessarios} painéis (${areaNecessaria}m²)`;
     document.getElementById('res-payback').textContent = `${paybackAnos} anos (est.)`;
 
+    saveSimulationResult({
+        date: new Date().toLocaleDateString('pt-BR'),
+        accountValue: contaMensal,
+        availableArea: isNaN(areaDisponivel) ? 0 : areaDisponivel,
+        savingsMonthly: economiaMensal,
+        savingsAnnual: economiaAnual,
+        energyGenerated: geracaoAlvoKwh,
+        co2Saved: geracaoAlvoKwh * CO2_FACTOR,
+        panels: paineisNecessarios,
+        requiredArea: Number(areaNecessaria),
+        payback: Number(paybackAnos)
+    });
+
     // Alerta se a área não for suficiente
     if (!isNaN(areaDisponivel) && areaDisponivel < areaNecessaria) {
         alert(`Atenção: Sua área disponível (${areaDisponivel}m²) é menor que a necessária (${areaNecessaria}m²) para suprir 90% do seu consumo.`);
     }
+}
+
+function saveSimulationResult(result) {
+    const storageKey = 'solarmap_simulation_history';
+    const history = JSON.parse(localStorage.getItem(storageKey) || '[]');
+    history.push(result);
+    if (history.length > 12) {
+        history.splice(0, history.length - 12);
+    }
+    localStorage.setItem(storageKey, JSON.stringify(history));
 }
 
 // Iniciar botões do painel de perfil (copiado do auth.js para garantir funcionamento)

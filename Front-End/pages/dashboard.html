@@ -55,56 +55,35 @@
         <div class="cards">
             <div class="card card-dashboard">
                 <h3>Economia</h3>
-                <p>R$ 187</p>
+                <p id="economia-value">R$ 187</p>
             </div>
 
             <div class="card card-mapa">
                 <h3>Energia</h3>
-                <p>320 kWh</p>
+                <p id="energia-value">320 kWh</p>
             </div>
 
             <div class="card card-simulador">
                 <h3>CO₂</h3>
-                <p>42 kg</p>
+                <p id="co2-value">42 kg</p>
             </div>
         </div>
 
-        <div class="card">
-            <canvas id="grafico-economia"></canvas>
+        <div class="chart-grid">
+            <div class="card">
+                <canvas id="grafico-economia"></canvas>
+            </div>
+            <div class="card">
+                <canvas id="grafico-energia"></canvas>
+            </div>
         </div>
 
-        <div class="card">
-            <canvas id="grafico-energia"></canvas>
+        <div class="card history-card">
+            <h3>Histórico de simulações</h3>
+            <ul id="simulation-history"></ul>
         </div>
 
     </main>
-
-    <script>
-        const meses = ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun'];
-
-        new Chart(document.getElementById('grafico-economia'), {
-            type: 'line',
-            data: {
-                labels: meses,
-                datasets: [{
-                    data: [150, 160, 175, 187, 190, 185],
-                    borderColor: '#ffd54f',
-                    fill: true
-                }]
-            }
-        });
-
-        new Chart(document.getElementById('grafico-energia'), {
-            type: 'bar',
-            data: {
-                labels: meses,
-                datasets: [{
-                    data: [290, 300, 310, 320, 330, 315],
-                    backgroundColor: '#4da6ff'
-                }]
-            }
-        });
-    </script>
 
     <footer class="footer">
         <p>SolarMap</p>
@@ -142,6 +121,7 @@
         }
     </script>
 
+    <script src="../assets/js/dashboard.js"></script>
 </body>
 
 </html>
