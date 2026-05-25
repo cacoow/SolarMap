@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Meu Perfil - SolarMap</title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="../assets/css/style.css">
+
+  <!-- Ícones -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+
+  <style>
+    .profile-content {
+      padding: 40px;
+      background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+      min-height: calc(100vh - 80px);
+    }
+
+    .profile-container-main {
+      max-width: 900px;
+      margin: 0 auto;
+      background: white;
+      border-radius: 15px;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+    }
+
+    .profile-header {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      padding: 40px;
+      color: white;
+      display: flex;
+      align-items: center;
+      gap: 30px;
+    }
+
+    .profile-avatar {
+      width: 120px;
+      height: 120px;
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 60px;
+      border: 3px solid white;
+    }
+
+    .profile-header-info h1 {
+      margin: 0 0 10px 0;
+      font-size: 28px;
+    }
+
+    .profile-header-info p {
+      margin: 5px 0;
+      opacity: 0.9;
+      font-size: 14px;
+    }
+
+    .profile-body {
+      padding: 40px;
+    }
+
+    .profile-section {
+      margin-bottom: 30px;
+    }
+
+    .profile-section h2 {
+      font-size: 18px;
+      color: #333;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .profile-section h2 i {
+      color: #667eea;
+      font-size: 20px;
+    }
+
+    .profile-form-group {
+      margin-bottom: 20px;
+    }
+
+    .profile-form-group label {
+      display: block;
+      margin-bottom: 8px;
+      color: #555;
+      font-weight: 500;
+      font-size: 14px;
+    }
+
+    .profile-form-group input,
+    .profile-form-group textarea {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #e0e0e0;
+      border-radius: 8px;
+      font-size: 14px;
+      font-family: inherit;
+      transition: border-color 0.3s;
+    }
+
+    .profile-form-group input:focus,
+    .profile-form-group textarea:focus {
+      outline: none;
+      border-color: #667eea;
+      box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+    }
+
+    .profile-form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+
+    .profile-actions {
+      display: flex;
+      gap: 15px;
+      margin-top: 30px;
+    }
+
+    .btn-save {
+      flex: 1;
+      padding: 12px 30px;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .btn-save:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+    }
+
+    .btn-cancel {
+      flex: 1;
+      padding: 12px 30px;
+      background: #f0f0f0;
+      color: #333;
+      border: none;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .btn-cancel:hover {
+      background: #e0e0e0;
+    }
+
+    .divider {
+      height: 1px;
+      background: #e0e0e0;
+      margin: 30px 0;
+    }
+
+    .alert {
+      padding: 15px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+      display: none;
+    }
+
+    .alert.success {
+      background-color: #d4edda;
+      color: #155724;
+      border: 1px solid #c3e6cb;
+      display: block;
+    }
+
+    .alert.error {
+      background-color: #f8d7da;
+      color: #721c24;
+      border: 1px solid #f5c6cb;
+      display: block;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="profile-container">
+      <div class="profile-icon">
+        <i class="fas fa-user"></i>
+      </div>
+      <div class="profile-panel">
+        <div class="profile-panel-header">
+          <i class="fas fa-user-circle"></i>
+          <div class="profile-panel-info">
+            <div class="profile-panel-name" id="user-name">Carregando...</div>
+            <div class="profile-panel-email" id="user-email">...</div>
+          </div>
+        </div>
+        <ul class="profile-panel-menu">
+          <li><a href="./perfil.html"><i class="fas fa-user"></i>Meu Perfil</a></li>
+          <li><a href="./configuracoes.html"><i class="fas fa-cog"></i>Configurações</a></li>
+          <li><a href="./historico.html"><i class="fas fa-history"></i>Histórico</a></li>
+          <li><a href="./ajuda.html"><i class="fas fa-question-circle"></i>Ajuda</a></li>
+        </ul>
+        <div class="profile-panel-login" id="auth-login-section">
+          <a href="./login.html"><i class="fas fa-sign-in-alt"></i>Login</a>
+        </div>
+        <div class="profile-panel-logout" id="auth-logout-section">
+          <a href="#" id="logout-link"><i class="fas fa-sign-out-alt"></i>Sair</a>
+        </div>
+      </div>
+    </div>
+    <div class="menu">
+      <a href="../index.html" data-label="Início"><i class="fas fa-home"></i></a>
+      <a href="./simulador.html" data-label="Simulador"><i class="fas fa-calculator"></i></a>
+      <a href="./mapa.html" class="mapa" data-label="Mapa"><i class="fas fa-map"></i></a>
+      <a href="./dashboard.html" data-label="Dashboard"><i class="fas fa-chart-line"></i></a>
+    </div>
+  </aside>
+
+  <!-- CONTEÚDO -->
+  <main class="content">
+    <section class="profile-content">
+      <div class="profile-container-main">
+        
+        <!-- HEADER DO PERFIL -->
+        <div class="profile-header">
+          <div class="profile-avatar">
+            <i class="fas fa-user"></i>
+          </div>
+          <div class="profile-header-info">
+            <h1 id="header-name">Seu Nome</h1>
+            <p id="header-email">seu.email@example.com</p>
+            <p id="header-status">Membro desde Janeiro de 2024</p>
+          </div>
+        </div>
+
+        <!-- CORPO DO PERFIL -->
+        <div class="profile-body">
+          
+          <div id="alert-message" class="alert"></div>
+
+          <!-- INFORMAÇÕES PESSOAIS -->
+          <div class="profile-section">
+            <h2><i class="fas fa-user-circle"></i> Informações Pessoais</h2>
+            
+            <form id="profile-form">
+              <div class="profile-form-row">
+                <div class="profile-form-group">
+                  <label for="firstName">Nome</label>
+                  <input type="text" id="firstName" placeholder="Seu nome" required>
+                </div>
+                <div class="profile-form-group">
+                  <label for="lastName">Sobrenome</label>
+                  <input type="text" id="lastName" placeholder="Seu sobrenome" required>
+                </div>
+              </div>
+
+              <div class="profile-form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" placeholder="seu.email@example.com" required disabled>
+              </div>
+
+              <div class="profile-form-row">
+                <div class="profile-form-group">
+                  <label for="phone">Telefone</label>
+                  <input type="tel" id="phone" placeholder="(11) 99999-9999">
+                </div>
+                <div class="profile-form-group">
+                  <label for="birthDate">Data de Nascimento</label>
+                  <input type="date" id="birthDate">
+                </div>
+              </div>
+
+              <div class="profile-form-group">
+                <label for="address">Endereço</label>
+                <input type="text" id="address" placeholder="Rua, número, complemento">
+              </div>
+
+              <div class="profile-form-row">
+                <div class="profile-form-group">
+                  <label for="city">Cidade</label>
+                  <input type="text" id="city" placeholder="Sua cidade">
+                </div>
+                <div class="profile-form-group">
+                  <label for="state">Estado</label>
+                  <input type="text" id="state" placeholder="SP, RJ, MG...">
+                </div>
+              </div>
+
+              <div class="divider"></div>
+
+              <div class="profile-actions">
+                <button type="submit" class="btn-save">
+                  <i class="fas fa-save"></i> Salvar Alterações
+                </button>
+                <button type="reset" class="btn-cancel">
+                  <i class="fas fa-undo"></i> Cancelar
+                </button>
+              </div>
+            </form>
+          </div>
+
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Scripts -->
+  <script src="../assets/js/config.js"></script>
+  <script src="../assets/js/auth.js"></script>
+  <script>
+    // Carrega dados do usuário logado
+    function loadProfileData() {
+      const user = JSON.parse(localStorage.getItem('solarmap_user') || '{}');
+      
+      // Se não houver usuário, criar um padrão para demonstração
+      if (!user.email) {
+        user.name = 'Usuário Demo';
+        user.email = 'demo@solarmap.com';
+        user.joinDate = 'Maio de 2026';
+      }
+
+      // Preenche cabeçalho
+      document.getElementById('header-name').textContent = user.name || 'Seu Nome';
+      document.getElementById('header-email').textContent = user.email || '';
+      document.getElementById('header-status').textContent = user.joinDate || 'Membro desde agora';
+
+      // Preenche formulário
+      const [firstName, ...lastNameParts] = (user.name || '').split(' ');
+      document.getElementById('firstName').value = firstName || '';
+      document.getElementById('lastName').value = lastNameParts.join(' ') || '';
+      document.getElementById('email').value = user.email || '';
+      document.getElementById('phone').value = user.phone || '';
+      document.getElementById('birthDate').value = user.birthDate || '';
+      document.getElementById('address').value = user.address || '';
+      document.getElementById('city').value = user.city || '';
+      document.getElementById('state').value = user.state || '';
+
+      document.getElementById('user-name').textContent = user.name || 'Usuário';
+      document.getElementById('user-email').textContent = user.email || '';
+    }
+
+    // Salva alterações do perfil
+    document.getElementById('profile-form').addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      const firstName = document.getElementById('firstName').value;
+      const lastName = document.getElementById('lastName').value;
+      const phone = document.getElementById('phone').value;
+      const birthDate = document.getElementById('birthDate').value;
+      const address = document.getElementById('address').value;
+      const city = document.getElementById('city').value;
+      const state = document.getElementById('state').value;
+
+      let user = JSON.parse(localStorage.getItem('solarmap_user') || '{}');
+      user.name = `${firstName} ${lastName}`.trim();
+      user.phone = phone;
+      user.birthDate = birthDate;
+      user.address = address;
+      user.city = city;
+      user.state = state;
+
+      localStorage.setItem('solarmap_user', JSON.stringify(user));
+
+      // Mostra mensagem de sucesso
+      const alert = document.getElementById('alert-message');
+      alert.className = 'alert success';
+      alert.innerHTML = '<i class="fas fa-check-circle"></i> Perfil atualizado com sucesso!';
+      alert.style.display = 'block';
+
+      setTimeout(() => {
+        alert.style.display = 'none';
+      }, 3000);
+
+      // Atualiza cabeçalho
+      document.getElementById('header-name').textContent = user.name;
+      document.getElementById('user-name').textContent = user.name;
+    });
+
+    // Carrega perfil ao iniciar
+    loadProfileData();
+  </script>
+</body>
+
+</html>

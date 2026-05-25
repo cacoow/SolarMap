@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Configurações - SolarMap</title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="../assets/css/style.css">
+
+  <!-- Ícones -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+
+  <style>
+    .settings-content {
+      padding: 40px;
+      background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+      min-height: calc(100vh - 80px);
+    }
+
+    .settings-container-main {
+      max-width: 900px;
+      margin: 0 auto;
+      background: white;
+      border-radius: 15px;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+    }
+
+    .settings-header {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      padding: 30px 40px;
+      color: white;
+    }
+
+    .settings-header h1 {
+      margin: 0;
+      font-size: 28px;
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .settings-header h1 i {
+      font-size: 32px;
+    }
+
+    .settings-body {
+      padding: 40px;
+    }
+
+    .settings-section {
+      margin-bottom: 40px;
+    }
+
+    .settings-section-title {
+      font-size: 18px;
+      color: #333;
+      margin-bottom: 20px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #667eea;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .settings-section-title i {
+      color: #667eea;
+      font-size: 20px;
+    }
+
+    .settings-option {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 0;
+      border-bottom: 1px solid #e0e0e0;
+    }
+
+    .settings-option:last-child {
+      border-bottom: none;
+    }
+
+    .settings-option-info {
+      flex: 1;
+    }
+
+    .settings-option-label {
+      font-weight: 600;
+      color: #333;
+      margin-bottom: 5px;
+    }
+
+    .settings-option-description {
+      font-size: 13px;
+      color: #999;
+    }
+
+    .toggle-switch {
+      position: relative;
+      display: inline-block;
+      width: 60px;
+      height: 30px;
+    }
+
+    .toggle-switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .toggle-slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: #ccc;
+      transition: 0.4s;
+      border-radius: 30px;
+    }
+
+    .toggle-slider:before {
+      position: absolute;
+      content: "";
+      height: 22px;
+      width: 22px;
+      left: 4px;
+      bottom: 4px;
+      background-color: white;
+      transition: 0.4s;
+      border-radius: 50%;
+    }
+
+    input:checked + .toggle-slider {
+      background-color: #667eea;
+    }
+
+    input:checked + .toggle-slider:before {
+      transform: translateX(30px);
+    }
+
+    .select-wrapper {
+      position: relative;
+      display: inline-block;
+      min-width: 200px;
+    }
+
+    .select-wrapper select {
+      padding: 10px 15px;
+      border: 1px solid #e0e0e0;
+      border-radius: 8px;
+      background: white;
+      color: #333;
+      cursor: pointer;
+      font-size: 14px;
+      transition: border-color 0.3s;
+    }
+
+    .select-wrapper select:hover,
+    .select-wrapper select:focus {
+      border-color: #667eea;
+      outline: none;
+    }
+
+    .settings-actions {
+      display: flex;
+      gap: 15px;
+      margin-top: 30px;
+      padding-top: 20px;
+      border-top: 1px solid #e0e0e0;
+    }
+
+    .btn-save {
+      padding: 12px 30px;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .btn-save:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+    }
+
+    .btn-reset {
+      padding: 12px 30px;
+      background: #f0f0f0;
+      color: #333;
+      border: none;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .btn-reset:hover {
+      background: #e0e0e0;
+    }
+
+    .alert {
+      padding: 15px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+      display: none;
+    }
+
+    .alert.success {
+      background-color: #d4edda;
+      color: #155724;
+      border: 1px solid #c3e6cb;
+      display: block;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="profile-container">
+      <div class="profile-icon">
+        <i class="fas fa-user"></i>
+      </div>
+      <div class="profile-panel">
+        <div class="profile-panel-header">
+          <i class="fas fa-user-circle"></i>
+          <div class="profile-panel-info">
+            <div class="profile-panel-name" id="user-name">Carregando...</div>
+            <div class="profile-panel-email" id="user-email">...</div>
+          </div>
+        </div>
+        <ul class="profile-panel-menu">
+          <li><a href="./perfil.html"><i class="fas fa-user"></i>Meu Perfil</a></li>
+          <li><a href="./configuracoes.html"><i class="fas fa-cog"></i>Configurações</a></li>
+          <li><a href="./historico.html"><i class="fas fa-history"></i>Histórico</a></li>
+          <li><a href="./ajuda.html"><i class="fas fa-question-circle"></i>Ajuda</a></li>
+        </ul>
+        <div class="profile-panel-login" id="auth-login-section">
+          <a href="./login.html"><i class="fas fa-sign-in-alt"></i>Login</a>
+        </div>
+        <div class="profile-panel-logout" id="auth-logout-section">
+          <a href="#" id="logout-link"><i class="fas fa-sign-out-alt"></i>Sair</a>
+        </div>
+      </div>
+    </div>
+    <div class="menu">
+      <a href="../index.html" data-label="Início"><i class="fas fa-home"></i></a>
+      <a href="./simulador.html" data-label="Simulador"><i class="fas fa-calculator"></i></a>
+      <a href="./mapa.html" class="mapa" data-label="Mapa"><i class="fas fa-map"></i></a>
+      <a href="./dashboard.html" data-label="Dashboard"><i class="fas fa-chart-line"></i></a>
+    </div>
+  </aside>
+
+  <!-- CONTEÚDO -->
+  <main class="content">
+    <section class="settings-content">
+      <div class="settings-container-main">
+        
+        <!-- HEADER -->
+        <div class="settings-header">
+          <h1><i class="fas fa-cog"></i> Configurações</h1>
+        </div>
+
+        <!-- CORPO -->
+        <div class="settings-body">
+          
+          <div id="alert-message" class="alert"></div>
+
+          <!-- CONFIGURAÇÕES DE NOTIFICAÇÕES -->
+          <div class="settings-section">
+            <div class="settings-section-title">
+              <i class="fas fa-bell"></i> Notificações
+            </div>
+            
+            <div class="settings-option">
+              <div class="settings-option-info">
+                <div class="settings-option-label">Notificações por Email</div>
+                <div class="settings-option-description">Receba atualizações importantes por email</div>
+              </div>
+              <label class="toggle-switch">
+                <input type="checkbox" id="notif-email" checked>
+                <span class="toggle-slider"></span>
+              </label>
+            </div>
+
+            <div class="settings-option">
+              <div class="settings-option-info">
+                <div class="settings-option-label">Alertas de Simulação</div>
+                <div class="settings-option-description">Receba notificações sobre novas simulações</div>
+              </div>
+              <label class="toggle-switch">
+                <input type="checkbox" id="notif-simulation" checked>
+                <span class="toggle-slider"></span>
+              </label>
+            </div>
+
+            <div class="settings-option">
+              <div class="settings-option-info">
+                <div class="settings-option-label">Atualizações de Produto</div>
+                <div class="settings-option-description">Fique informado sobre novas funcionalidades</div>
+              </div>
+              <label class="toggle-switch">
+                <input type="checkbox" id="notif-product">
+                <span class="toggle-slider"></span>
+              </label>
+            </div>
+          </div>
+
+          <!-- CONFIGURAÇÕES DE PRIVACIDADE -->
+          <div class="settings-section">
+            <div class="settings-section-title">
+              <i class="fas fa-lock"></i> Privacidade
+            </div>
+            
+            <div class="settings-option">
+              <div class="settings-option-info">
+                <div class="settings-option-label">Perfil Público</div>
+                <div class="settings-option-description">Permitir que outros usuários vejam seu perfil</div>
+              </div>
+              <label class="toggle-switch">
+                <input type="checkbox" id="privacy-public">
+                <span class="toggle-slider"></span>
+              </label>
+            </div>
+
+            <div class="settings-option">
+              <div class="settings-option-info">
+                <div class="settings-option-label">Compartilhar Dados de Uso</div>
+                <div class="settings-option-description">Ajude-nos a melhorar compartilhando dados anônimos</div>
+              </div>
+              <label class="toggle-switch">
+                <input type="checkbox" id="privacy-share" checked>
+                <span class="toggle-slider"></span>
+              </label>
+            </div>
+          </div>
+
+          <!-- CONFIGURAÇÕES DE APARÊNCIA -->
+          <div class="settings-section">
+            <div class="settings-section-title">
+              <i class="fas fa-palette"></i> Aparência
+            </div>
+            
+            <div class="settings-option">
+              <div class="settings-option-info">
+                <div class="settings-option-label">Tema</div>
+                <div class="settings-option-description">Escolha seu tema preferido</div>
+              </div>
+              <div class="select-wrapper">
+                <select id="theme-select">
+                  <option value="light">Claro</option>
+                  <option value="dark">Escuro</option>
+                  <option value="auto">Automático</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="settings-option">
+              <div class="settings-option-info">
+                <div class="settings-option-label">Idioma</div>
+                <div class="settings-option-description">Selecione o idioma de preferência</div>
+              </div>
+              <div class="select-wrapper">
+                <select id="language-select">
+                  <option value="pt-BR">Português (Brasil)</option>
+                  <option value="en-US">English (United States)</option>
+                  <option value="es-ES">Español (España)</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <!-- CONFIGURAÇÕES DE SEGURANÇA -->
+          <div class="settings-section">
+            <div class="settings-section-title">
+              <i class="fas fa-shield-alt"></i> Segurança
+            </div>
+            
+            <div class="settings-option">
+              <div class="settings-option-info">
+                <div class="settings-option-label">Autenticação em Dois Fatores</div>
+                <div class="settings-option-description">Adicione uma camada extra de segurança</div>
+              </div>
+              <label class="toggle-switch">
+                <input type="checkbox" id="security-2fa">
+                <span class="toggle-slider"></span>
+              </label>
+            </div>
+          </div>
+
+          <!-- AÇÕES -->
+          <div class="settings-actions">
+            <button class="btn-save" onclick="saveSettings()">
+              <i class="fas fa-save"></i> Salvar Configurações
+            </button>
+            <button class="btn-reset" onclick="resetSettings()">
+              <i class="fas fa-undo"></i> Restaurar Padrões
+            </button>
+          </div>
+
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Scripts -->
+  <script src="../assets/js/config.js"></script>
+  <script src="../assets/js/auth.js"></script>
+  <script>
+    // Verifica se usuário está logado
+    function checkAuth() {
+      let user = JSON.parse(localStorage.getItem('solarmap_user') || '{}');
+      if (!user.email) {
+        user.name = 'Usuário Demo';
+        user.email = 'demo@solarmap.com';
+      }
+      document.getElementById('user-name').textContent = user.name || 'Usuário';
+      document.getElementById('user-email').textContent = user.email || '';
+    }
+
+    // Carrega configurações salvas
+    function loadSettings() {
+      const settings = JSON.parse(localStorage.getItem('solarmap_settings') || '{}');
+      
+      document.getElementById('notif-email').checked = settings.notif_email !== false;
+      document.getElementById('notif-simulation').checked = settings.notif_simulation !== false;
+      document.getElementById('notif-product').checked = settings.notif_product || false;
+      document.getElementById('privacy-public').checked = settings.privacy_public || false;
+      document.getElementById('privacy-share').checked = settings.privacy_share !== false;
+      document.getElementById('theme-select').value = settings.theme || 'light';
+      document.getElementById('language-select').value = settings.language || 'pt-BR';
+      document.getElementById('security-2fa').checked = settings.security_2fa || false;
+    }
+
+    // Salva configurações
+    function saveSettings() {
+      const settings = {
+        notif_email: document.getElementById('notif-email').checked,
+        notif_simulation: document.getElementById('notif-simulation').checked,
+        notif_product: document.getElementById('notif-product').checked,
+        privacy_public: document.getElementById('privacy-public').checked,
+        privacy_share: document.getElementById('privacy-share').checked,
+        theme: document.getElementById('theme-select').value,
+        language: document.getElementById('language-select').value,
+        security_2fa: document.getElementById('security-2fa').checked
+      };
+
+      localStorage.setItem('solarmap_settings', JSON.stringify(settings));
+
+      const alert = document.getElementById('alert-message');
+      alert.className = 'alert success';
+      alert.innerHTML = '<i class="fas fa-check-circle"></i> Configurações salvas com sucesso!';
+      alert.style.display = 'block';
+
+      setTimeout(() => {
+        alert.style.display = 'none';
+      }, 3000);
+    }
+
+    // Restaura configurações padrões
+    function resetSettings() {
+      if (confirm('Deseja realmente restaurar as configurações padrão?')) {
+        localStorage.removeItem('solarmap_settings');
+        loadSettings();
+      }
+    }
+
+    // Carrega dados ao iniciar
+    checkAuth();
+    loadSettings();
+  </script>
+</body>
+
+</html>
