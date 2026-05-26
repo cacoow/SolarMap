@@ -8,9 +8,15 @@ function calcularEconomia() {
     const CUSTO_WP_INSTALADO = 3.40; // R$ por Watt-pico (Preço médio de mercado instalado)
     const TAXA_DISP_KWH = 50;      // kWh (Custo de disponibilidade padrão para conexão bifásica)
     const CO2_FACTOR = 0.13125;    // kg CO₂ por kWh médio estimado
+    const INFLACAO_ENERGETICA = 1.05; // 5% de aumento anual estimado na tarifa
 
     const contaMensal = parseFloat(document.getElementById('input-bill').value);
     const areaDisponivel = parseFloat(document.getElementById('input-area').value);
+
+    if (isNaN(contaMensal)) {
+        alert("Por favor, insira o valor da sua conta mensal.");
+        return;
+    }
 
     if (isNaN(contaMensal) || contaMensal < 150) {
         alert("Para viabilidade solar, a conta deve ser superior a R$ 150,00.");
@@ -37,8 +43,8 @@ function calcularEconomia() {
 
     // 6. Investimento Estimado e Payback (Retorno sobre Investimento)
     const custoEstimado = (paineisNecessarios * POTENCIA_PAINEL) * CUSTO_WP_INSTALADO;
-    const paybackAnos = (custoEstimado / (economiaAnual * 1.05)).toFixed(1); // Considera 5% de inflação energética anual
-
+    const paybackAnos = (custoEstimado / (economiaAnual * INFLACAO_ENERGETICA)).toFixed(1);
+    
     // Atualizar UI
     document.getElementById('res-monthly').textContent = `R$ ${economiaMensal.toLocaleString('pt-BR', {minimumFractionDigits: 2})}`;
     document.getElementById('res-yearly').textContent = `R$ ${economiaAnual.toLocaleString('pt-BR', {minimumFractionDigits: 2})}`;
@@ -73,8 +79,3 @@ function saveSimulationResult(result) {
     }
     localStorage.setItem(storageKey, JSON.stringify(history));
 }
-
-// Iniciar botões do painel de perfil (copiado do auth.js para garantir funcionamento)
-document.querySelector('.profile-icon')?.addEventListener('click', () => {
-    document.querySelector('.profile-panel')?.classList.toggle('active');
-});

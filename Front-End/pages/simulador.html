@@ -54,6 +54,7 @@
     .result-label { color: #666; font-size: 0.95rem; }
     .result-value { font-weight: 700; color: var(--azul); font-size: 1.2rem; }
     .result-value.highlight { color: #2e7d32; }
+    .disclaimer { margin-top: 20px; font-size: 0.8rem; color: #888; font-style: italic; text-align: center; line-height: 1.4; }
 
     @media (max-width: 900px) {
       .simulator-container { grid-template-columns: 1fr; }
@@ -74,7 +75,10 @@
           </div>
         </div>
         <ul class="profile-panel-menu">
-          <li><a href="#"><i class="fas fa-user"></i>Meu Perfil</a></li>
+          <li><a href="./perfil.html"><i class="fas fa-user"></i>Meu Perfil</a></li>
+          <li><a href="./configuracoes.html"><i class="fas fa-cog"></i>Configurações</a></li>
+          <li><a href="./historico.html"><i class="fas fa-history"></i>Histórico</a></li>
+          <li><a href="./ajuda.html"><i class="fas fa-question-circle"></i>Ajuda</a></li>
         </ul>
         <div class="profile-panel-login" id="auth-login-section"><a href="login.html"><i class="fas fa-sign-in-alt"></i>Login</a></div>
         <div class="profile-panel-logout" id="auth-logout-section"><a href="#" id="logout-link"><i class="fas fa-sign-out-alt"></i>Sair</a></div>
@@ -119,6 +123,7 @@
             <div class="result-item"><span class="result-label">Sistemas Necessários</span><span class="result-value" id="res-panels">0 painéis</span></div>
             <div class="result-item"><span class="result-label">Payback (Retorno)</span><span class="result-value" id="res-payback">-</span></div>
           </div>
+          <p class="disclaimer">* Simulação baseada em parâmetros médios de irradiação e tarifas da região de Sorocaba/SP.</p>
         </section>
       </div>
     </div>
