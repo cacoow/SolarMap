@@ -94,33 +94,6 @@
     <script src="../assets/js/config.js"></script>
     <script src="../assets/js/auth.js"></script>
 
-    <script>
-        // Profile panel toggle
-        const profileIcon = document.querySelector('.profile-icon');
-        const profilePanel = document.querySelector('.profile-panel');
-        const profileContainer = document.querySelector('.profile-container');
-
-        if (profileIcon && profilePanel) {
-            profileIcon.addEventListener('click', (e) => {
-                e.stopPropagation();
-                profilePanel.classList.toggle('active');
-            });
-
-            document.addEventListener('click', (e) => {
-                if (!profileContainer.contains(e.target)) {
-                    profilePanel.classList.remove('active');
-                }
-            });
-
-            const profileMenuLinks = document.querySelectorAll('.profile-panel-menu a, .profile-panel-logout a, .profile-panel-login a');
-            profileMenuLinks.forEach(link => {
-                link.addEventListener('click', () => {
-                    profilePanel.classList.remove('active');
-                });
-            });
-        }
-    </script>
-
     <script src="../assets/js/dashboard.js"></script>
 </body>
 

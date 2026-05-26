@@ -560,45 +560,8 @@
                 <i class="fas fa-phone"></i>
                 <h4>Telefone</h4>
                 <p>(11) 3000-0000</p>
-                <a href="tel:+551130000000" class="contact-link">Ligar</a>
+                <a href="" class="contact-link">Ligar</a>
               </div>
-              <div class="contact-option">
-                <i class="fas fa-comments"></i>
-                <h4>Chat ao Vivo</h4>
-                <p>Segunda a sexta, 9h às 18h</p>
-                <a href="#" class="contact-link">Iniciar Chat</a>
-              </div>
-            </div>
-          </div>
-
-          <!-- RECURSOS ÚTEIS -->
-          <div class="resource-section">
-            <div class="faq-title">
-              <i class="fas fa-book"></i> Recursos Úteis
-            </div>
-            
-            <div class="resource-card">
-              <div class="resource-info">
-                <h4>Guia Completo do SolarMap</h4>
-                <p>Um guia detalhado com instruções passo-a-passo para aproveitar ao máximo a plataforma</p>
-              </div>
-              <a href="#" class="resource-link">Baixar PDF</a>
-            </div>
-
-            <div class="resource-card">
-              <div class="resource-info">
-                <h4>Dicas para Otimizar Simulações</h4>
-                <p>Aprenda técnicas avançadas para melhorar a precisão e relevância de suas simulações</p>
-              </div>
-              <a href="#" class="resource-link">Ler Artigo</a>
-            </div>
-
-            <div class="resource-card">
-              <div class="resource-info">
-                <h4>Webinar: Energia Solar para Iniciantes</h4>
-                <p>Assista uma sessão informativa sobre os benefícios e desafios da energia solar</p>
-              </div>
-              <a href="#" class="resource-link">Assistir Vídeo</a>
             </div>
           </div>
 
@@ -611,17 +574,6 @@
   <script src="../assets/js/config.js"></script>
   <script src="../assets/js/auth.js"></script>
   <script>
-    // Verifica autenticação
-    function checkAuth() {
-      let user = JSON.parse(localStorage.getItem('solarmap_user') || '{}');
-      if (!user.email) {
-        user.name = 'Usuário Demo';
-        user.email = 'demo@solarmap.com';
-      }
-      document.getElementById('user-name').textContent = user.name || 'Usuário';
-      document.getElementById('user-email').textContent = user.email || '';
-    }
-
     // FAQs interativas
     document.querySelectorAll('.faq-question').forEach(question => {
       question.addEventListener('click', function() {
@@ -653,9 +605,6 @@
         }
       });
     }
-
-    // Inicializa página
-    checkAuth();
   </script>
 </body>
 

@@ -315,35 +315,6 @@
             </div>
           </div>
 
-          <!-- CONFIGURAÇÕES DE PRIVACIDADE -->
-          <div class="settings-section">
-            <div class="settings-section-title">
-              <i class="fas fa-lock"></i> Privacidade
-            </div>
-            
-            <div class="settings-option">
-              <div class="settings-option-info">
-                <div class="settings-option-label">Perfil Público</div>
-                <div class="settings-option-description">Permitir que outros usuários vejam seu perfil</div>
-              </div>
-              <label class="toggle-switch">
-                <input type="checkbox" id="privacy-public">
-                <span class="toggle-slider"></span>
-              </label>
-            </div>
-
-            <div class="settings-option">
-              <div class="settings-option-info">
-                <div class="settings-option-label">Compartilhar Dados de Uso</div>
-                <div class="settings-option-description">Ajude-nos a melhorar compartilhando dados anônimos</div>
-              </div>
-              <label class="toggle-switch">
-                <input type="checkbox" id="privacy-share" checked>
-                <span class="toggle-slider"></span>
-              </label>
-            </div>
-          </div>
-
           <!-- CONFIGURAÇÕES DE APARÊNCIA -->
           <div class="settings-section">
             <div class="settings-section-title">
@@ -416,17 +387,6 @@
   <script src="../assets/js/config.js"></script>
   <script src="../assets/js/auth.js"></script>
   <script>
-    // Verifica se usuário está logado
-    function checkAuth() {
-      let user = JSON.parse(localStorage.getItem('solarmap_user') || '{}');
-      if (!user.email) {
-        user.name = 'Usuário Demo';
-        user.email = 'demo@solarmap.com';
-      }
-      document.getElementById('user-name').textContent = user.name || 'Usuário';
-      document.getElementById('user-email').textContent = user.email || '';
-    }
-
     // Carrega configurações salvas
     function loadSettings() {
       const settings = JSON.parse(localStorage.getItem('solarmap_settings') || '{}');
@@ -434,8 +394,6 @@
       document.getElementById('notif-email').checked = settings.notif_email !== false;
       document.getElementById('notif-simulation').checked = settings.notif_simulation !== false;
       document.getElementById('notif-product').checked = settings.notif_product || false;
-      document.getElementById('privacy-public').checked = settings.privacy_public || false;
-      document.getElementById('privacy-share').checked = settings.privacy_share !== false;
       document.getElementById('theme-select').value = settings.theme || 'light';
       document.getElementById('language-select').value = settings.language || 'pt-BR';
       document.getElementById('security-2fa').checked = settings.security_2fa || false;
@@ -447,8 +405,6 @@
         notif_email: document.getElementById('notif-email').checked,
         notif_simulation: document.getElementById('notif-simulation').checked,
         notif_product: document.getElementById('notif-product').checked,
-        privacy_public: document.getElementById('privacy-public').checked,
-        privacy_share: document.getElementById('privacy-share').checked,
         theme: document.getElementById('theme-select').value,
         language: document.getElementById('language-select').value,
         security_2fa: document.getElementById('security-2fa').checked
@@ -475,7 +431,6 @@
     }
 
     // Carrega dados ao iniciar
-    checkAuth();
     loadSettings();
   </script>
 </body>

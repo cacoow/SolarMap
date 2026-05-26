@@ -237,11 +237,35 @@ const auth = new SupabaseAuth();
 
 // Lógica para atualizar a interface em todas as páginas
 document.addEventListener('DOMContentLoaded', async () => {
-    // Pequeno delay para garantir que o Supabase inicializou
-    setTimeout(async () => {
-        const session = await auth.getSession();
-        const user = session?.user;
+    // Controle central do painel de perfil (Sidebar)
+    const initProfilePanel = () => {
+        const profileIcon = document.querySelector('.profile-icon');
+        const profilePanel = document.querySelector('.profile-panel');
+        const profileContainer = document.querySelector('.profile-container');
 
+        if (profileIcon && profilePanel) {
+            profileIcon.addEventListener('click', (e) => {
+                e.stopPropagation();
+                profilePanel.classList.toggle('active');
+            });
+
+            document.addEventListener('click', (e) => {
+                if (profileContainer && !profileContainer.contains(e.target)) {
+                    profilePanel.classList.remove('active');
+                }
+            });
+
+            const profileMenuLinks = document.querySelectorAll('.profile-panel-menu a, .profile-panel-logout a, .profile-panel-login a');
+            profileMenuLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    profilePanel.classList.remove('active');
+                });
+            });
+        }
+    };
+
+    // Função para sincronizar a UI do painel lateral
+    const syncSidebarUI = (user) => {
         const nameEl = document.getElementById('user-name');
         const emailEl = document.getElementById('user-email');
         const loginSection = document.getElementById('auth-login-section');
@@ -249,32 +273,62 @@ document.addEventListener('DOMContentLoaded', async () => {
         const logoutLink = document.getElementById('logout-link');
 
         if (user) {
-            // Usuário Logado
-            if (nameEl) nameEl.textContent = user.user_metadata?.full_name || 'Usuário';
+            const fullName = user.user_metadata?.full_name || 'Usuário';
+            if (nameEl) nameEl.textContent = fullName;
             if (emailEl) emailEl.textContent = user.email;
             if (loginSection) loginSection.style.display = 'none';
             if (logoutSection) logoutSection.style.display = 'block';
+
+            // Sincroniza com o localStorage para que as páginas (perfil, etc) reconheçam o login
+            const localData = JSON.parse(localStorage.getItem('solarmap_user') || '{}');
+            localStorage.setItem('solarmap_user', JSON.stringify({
+                ...localData,
+                name: fullName,
+                email: user.email,
+                id: user.id
+            }));
         } else {
-            // Usuário Deslogado
-            if (nameEl) nameEl.textContent = 'Visitante';
-            if (emailEl) emailEl.textContent = 'Faça login para salvar dados';
-            if (loginSection) loginSection.style.display = 'block';
-            if (logoutSection) logoutSection.style.display = 'none';
+            // Se não há sessão no Supabase, verifica se existe usuário no localStorage (Demo ou persistido)
+            const localUser = JSON.parse(localStorage.getItem('solarmap_user') || '{}');
+            if (localUser.email) {
+                if (nameEl) nameEl.textContent = localUser.name || 'Usuário';
+                if (emailEl) emailEl.textContent = localUser.email;
+                if (loginSection) loginSection.style.display = 'none';
+                if (logoutSection) logoutSection.style.display = 'block';
+            } else {
+                if (nameEl) nameEl.textContent = 'Visitante';
+                if (emailEl) emailEl.textContent = 'Faça login para salvar dados';
+                if (loginSection) loginSection.style.display = 'block';
+                if (logoutSection) logoutSection.style.display = 'none';
+            }
         }
 
-        // Configurar evento de Logout
-        if (logoutLink) {
+        // Configurar evento de Logout (apenas uma vez)
+        if (logoutLink && !logoutLink.dataset.listenerSet) {
+            logoutLink.dataset.listenerSet = 'true';
             logoutLink.addEventListener('click', async (e) => {
                 e.preventDefault();
                 const result = await auth.logout();
                 if (result.success) {
-                    // Limpar localStorage se houver
+                    localStorage.removeItem('solarmap_user');
                     localStorage.removeItem('solarmap_email');
-                    // Redirecionar para home ou login
                     const isSubPage = window.location.pathname.includes('/pages/');
                     window.location.href = isSubPage ? '../index.html' : 'index.html';
                 }
             });
         }
+    };
+
+    // Inicializa o comportamento do clique no perfil
+    initProfilePanel();
+
+    // Executa a verificação imediatamente
+    const session = await auth.getSession();
+    syncSidebarUI(session?.user);
+
+    // Re-checa após 500ms apenas para garantir que o estado do Supabase foi recuperado
+    setTimeout(async () => {
+        const refreshedSession = await auth.getSession();
+        syncSidebarUI(refreshedSession?.user);
     }, 500);
 });

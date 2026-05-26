@@ -2,13 +2,6 @@
 
 
 document.addEventListener('DOMContentLoaded', async () => {
-    // Aguardar Supabase estar disponível
-    let tentativas = 0;
-    while (!window.supabase && tentativas < 50) {
-        await new Promise(resolve => setTimeout(resolve, 100));
-        tentativas++;
-    }
-
     if (!window.supabase) {
         console.error('❌ Supabase não pôde ser carregado após esperar 5 segundos');
         document.getElementById('message').textContent = '❌ Erro ao carregar biblioteca de autenticação. Recarregue a página.';

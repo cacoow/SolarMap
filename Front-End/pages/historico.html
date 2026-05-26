@@ -387,17 +387,6 @@
   <script src="../assets/js/config.js"></script>
   <script src="../assets/js/auth.js"></script>
   <script>
-    // Verifica autenticação
-    function checkAuth() {
-      let user = JSON.parse(localStorage.getItem('solarmap_user') || '{}');
-      if (!user.email) {
-        user.name = 'Usuário Demo';
-        user.email = 'demo@solarmap.com';
-      }
-      document.getElementById('user-name').textContent = user.name || 'Usuário';
-      document.getElementById('user-email').textContent = user.email || '';
-    }
-
     // Formata moeda
     function formatCurrency(value) {
       return `R$ ${value.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
@@ -492,7 +481,6 @@ Payback: ${item.payback} anos
     }
 
     // Inicializa página
-    checkAuth();
     loadHistory();
   </script>
 </body>
